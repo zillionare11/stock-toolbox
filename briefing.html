@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#4a6cf7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>看看 | 每日盘后情报</title>
+<meta name="description" content="2026-08-27 A股盘后综述：中航重机、中航高科、金风科技行情总览、资金流向、消息面及走势预测。">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{--bg:#f0f2f5;--card:#fff;--text:#1a1a2e;--text2:#6b7280;--text3:#9ca3af;--border:#e5e7eb;--red:#e74c3c;--green:#27ae60;--accent:#4a6cf7;--accent-light:#eef2ff;--accent-dark:#3730a3;--warn:#f39c12;--warn-bg:#fffbeb;--gold:#d4a017;--gold-bg:#fffdf5;--gold-border:#f0e6d0;--shadow:0 1px 3px rgba(0,0,0,.05);--shadow-lg:0 4px 24px rgba(0,0,0,.06);--shadow-hover:0 8px 32px rgba(0,0,0,.08);--radius:16px;--radius-sm:10px;--radius-xs:6px;}
+  [data-theme="dark"]{--bg:#0f1115;--card:#1c1f26;--text:#e8e8ed;--text2:#9ca3af;--text3:#6b7280;--border:#2d3139;--red:#ff6b6b;--green:#4ade80;--accent:#6366f1;--accent-light:#1e1b4b;--accent-dark:#a5b4fc;--warn:#fbbf24;--warn-bg:#2a2110;--gold:#f0b429;--gold-bg:#1f1a08;--gold-border:#3d3422;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:64px;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+  .nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  [data-theme="dark"] .nav{background:rgba(28,31,38,.85);}
+  .nav-inner{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-size:18px;font-weight:800;color:var(--accent);white-space:nowrap;margin-right:auto;letter-spacing:1px;}
+  .nav a{font-size:13px;color:var(--text2);text-decoration:none;white-space:nowrap;padding:6px 12px;border-radius:20px;transition:all .25s;}
+  .nav a:hover{background:var(--accent-light);color:var(--accent);}
+  .nav a.active{background:var(--accent);color:#fff;}
+  .theme-toggle{border:1px solid var(--border);background:var(--card);color:var(--text2);width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .25s;flex-shrink:0;}
+  .theme-toggle:hover{background:var(--accent-light);color:var(--accent);}
+  .wrap{max-width:860px;margin:0 auto;padding:24px 16px 48px;}
+  .hero{text-align:center;margin-bottom:28px;background:linear-gradient(135deg,var(--accent-light) 0%,transparent 100%);border-radius:var(--radius);padding:32px 20px 24px;position:relative;overflow:hidden;}
+  h1{font-size:32px;font-weight:800;letter-spacing:3px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-date{font-size:13px;color:var(--text2);margin-top:6px;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .hero-date .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+  .summary-box{background:linear-gradient(135deg,var(--accent-light) 0%,var(--card) 100%);border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:var(--radius-sm);padding:16px 18px;font-size:14px;line-height:1.75;margin-bottom:24px;box-shadow:var(--shadow);}
+  .summary-box strong{color:var(--accent);font-size:15px;}
+  .section{margin-bottom:28px;background:var(--card);border-radius:var(--radius);padding:24px 22px;box-shadow:var(--shadow-lg);transition:all .25s;}
+  .section:hover{box-shadow:var(--shadow-hover);}
+  .section h2{font-size:18px;font-weight:700;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:8px;}
+  .section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--accent);color:#fff;font-size:14px;font-weight:700;flex-shrink:0;}
+  .section h3{font-size:15px;font-weight:700;margin:18px 0 10px;}
+  .stock-card{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px;}
+  @media(max-width:640px){.stock-card{grid-template-columns:1fr;}}
+  .card{background:linear-gradient(135deg,var(--card) 0%,var(--bg) 100%);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;transition:all .25s;position:relative;overflow:hidden;}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:all .25s;}
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover);border-color:var(--accent);}
+  .card:hover::before{opacity:1;}
+  .card h3{font-size:16px;margin:0 0 6px;font-weight:700;display:flex;align-items:center;justify-content:space-between;}
+  .card h3 .code{font-size:12px;color:var(--text3);font-weight:400;}
+  .big-price{font-size:26px;font-weight:800;margin:4px 0 12px;}
+  .big-price .pct{font-size:14px;font-weight:600;margin-left:4px;}
+  .up{color:var(--red);}.down{color:var(--green);}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:var(--accent-light);color:var(--accent);margin-left:6px;vertical-align:middle;font-weight:500;}
+  .tag.red-tag{background:#fef2f2;color:var(--red);}
+  .tag.green-tag{background:#f0fdf4;color:var(--green);}
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13px;color:var(--text2);margin-top:8px;padding-top:12px;border-top:1px dashed var(--border);}
+  .mini-grid div{display:flex;justify-content:space-between;align-items:center;}
+  .mini-grid .label{color:var(--text3);font-size:12px;}
+  .mini-grid .val{color:var(--text);font-weight:600;font-size:13px;}
+  .kline-wrap{margin:10px 0 4px;}
+  .kline-chart{height:120px;width:100%;}
+  .kline-label{font-size:11px;color:var(--text3);text-align:center;margin-top:2px;}
+  .flow-chart{height:340px;width:100%;margin-top:16px;border-radius:var(--radius-sm);overflow:hidden;}
+  .msg-list{margin:0;padding:0;list-style:none;}
+  .msg-list li{padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;line-height:1.7;display:flex;gap:10px;align-items:flex-start;}
+  .msg-list li:last-child{border-bottom:none;}
+  .msg-list .date{color:var(--accent);font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px;background:var(--accent-light);padding:2px 8px;border-radius:4px;}
+  .msg-list .content{flex:1;}
+  .msg-list .tag-pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;background:var(--bg);color:var(--text2);margin-left:6px;font-weight:500;}
+  .msg-list .tag-pill.warn{background:var(--warn-bg);color:var(--warn);}
+  .msg-list .tag-pill.info{background:var(--accent-light);color:var(--accent);}
+  .forecast-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:12px;transition:all .25s;}
+  .forecast-card:hover{border-color:var(--accent);box-shadow:var(--shadow);}
+  .forecast-card h4{margin:0 0 10px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .forecast-card h4 .stock-code{font-size:12px;color:var(--text3);font-weight:400;}
+  .forecast-card ul{margin:0;padding-left:18px;font-size:13px;color:var(--text2);line-height:1.8;}
+  .forecast-card ul li{margin-bottom:6px;}
+  .forecast-card ul li strong{color:var(--text);font-weight:600;}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:12px;border-radius:var(--radius-xs);}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:0;min-width:500px;}
+  th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border);}
+  th{background:var(--bg);font-weight:600;color:var(--text2);font-size:12px;white-space:nowrap;}
+  td{vertical-align:top;line-height:1.6;}
+  tr:last-child td{border-bottom:none;}
+  .center{text-align:center;}.right{text-align:right;}.bold{font-weight:700;}
+  .note{font-size:12px;color:var(--text3);margin-top:14px;line-height:1.6;padding-top:12px;border-top:1px dashed var(--border);}
+  .disclaimer{background:var(--warn-bg);border-left:4px solid var(--warn);padding:16px 18px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:13px;color:var(--warn);margin-top:24px;line-height:1.7;}
+  .disclaimer strong{display:block;margin-bottom:6px;font-size:14px;}
+  .gold-bar{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;}
+  @media(max-width:640px){.gold-bar{grid-template-columns:1fr;}}
+  .gold-card{background:linear-gradient(135deg,var(--gold-bg) 0%,var(--card) 100%);border:1px solid var(--gold-border);border-radius:var(--radius-sm);padding:18px;transition:all .25s;}
+  .gold-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);}
+  .gold-card h4{margin:0 0 12px;font-size:15px;font-weight:700;color:var(--gold);}
+  .gold-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--gold-border);}
+  .gold-row:last-child{border-bottom:none;}
+  .gold-row .label{color:var(--text3);}
+  .gold-row .val{font-weight:600;}
+  .gold-brand{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+  @media(max-width:640px){.gold-brand{grid-template-columns:repeat(2,1fr);}}
+  .brand-item{background:var(--card);border:1px solid var(--gold-border);border-radius:var(--radius-xs);padding:12px 8px;text-align:center;font-size:12px;transition:all .25s;}
+  .brand-item:hover{box-shadow:var(--shadow);transform:translateY(-1px);}
+  .brand-item .name{color:var(--text3);margin-bottom:4px;}
+  .brand-item .price{font-weight:700;font-size:15px;}
+  .rec-card{background:linear-gradient(135deg,var(--accent-light) 0%,var(--card) 100%);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;margin-bottom:14px;transition:all .25s;}
+  .rec-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);border-color:var(--accent);}
+  .rec-card h4{margin:0 0 8px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .rec-card .rec-meta{font-size:12px;color:var(--text2);margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border);}
+  .rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 14px;font-size:13px;}
+  @media(max-width:640px){.rec-grid{grid-template-columns:1fr;}}
+  .rec-grid div{display:flex;justify-content:space-between;align-items:center;}
+  .rec-grid .rl{color:var(--text3);font-size:12px;}
+  .rec-grid .rv{color:var(--text);font-weight:600;font-size:13px;}
+  .warn-box{background:#fef2f2;border-radius:var(--radius-sm);padding:16px 18px;font-size:13px;margin-top:16px;border-left:4px solid var(--red);line-height:1.8;}
+  .warn-box strong{color:var(--red);display:block;margin-bottom:6px;}
+  .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:all .25s;box-shadow:0 4px 16px rgba(74,108,247,.3);z-index:90;}
+  .back-top.show{opacity:1;pointer-events:auto;}
+  .visits{text-align:center;margin:24px 0;font-size:13px;color:var(--text3);}
+  .fade-in{opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  .svg-chart{width:100%;height:100%;display:block;}
+  .svg-chart text{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+  /* ===== 移动端适配 ===== */
+  @media(max-width:640px){
+    .wrap{padding:14px 10px 40px;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
+    .hero{padding:22px 14px 18px;border-radius:14px;}
+    h1{font-size:24px;letter-spacing:2px;}
+    .hero-date{font-size:12px;}
+    .summary-box{padding:14px 14px;font-size:13px;line-height:1.7;margin-bottom:18px;}
+    .summary-box strong{font-size:14px;}
+    .section{padding:16px 14px;border-radius:12px;margin-bottom:20px;}
+    .section h2{font-size:16px;margin-bottom:14px;}
+    .section h2 .num{width:24px;height:24px;font-size:12px;}
+    .section h3{font-size:14px;}
+    .nav-inner{padding:8px 10px;gap:2px;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
+    .nav-brand{font-size:16px;}
+    .nav a{font-size:12px;padding:5px 9px;}
+    .theme-toggle{width:30px;height:30px;font-size:14px;}
+    .card{padding:14px;}
+    .card h3{font-size:15px;}
+    .big-price{font-size:24px;}
+    .big-price .pct{font-size:13px;}
+    .mini-grid{font-size:12px;gap:4px 10px;}
+    .mini-grid .label{font-size:11px;}
+    .mini-grid .val{font-size:12px;}
+    .kline-chart{height:100px;}
+    .flow-chart{height:280px;}
+    th,td{padding:8px 6px;}
+    th{font-size:11px;}
+    .msg-list li{padding:12px 0;font-size:13px;}
+    .msg-list .date{font-size:11px;padding:2px 6px;}
+    .gold-card{padding:14px;}
+    .gold-card h4{font-size:14px;}
+    .gold-row{font-size:12px;}
+    .brand-item{padding:10px 6px;}
+    .brand-item .price{font-size:13px;}
+    .brand-item .name{font-size:11px;}
+    .rec-card{padding:14px;}
+    .rec-card h4{font-size:14px;}
+    .back-top{bottom:16px;right:16px;width:40px;height:40px;font-size:18px;}
+    .disclaimer{padding:14px;font-size:12px;}
+  }
+  /* ===== 超小屏适配（iPhone SE等） ===== */
+  @media(max-width:380px){
+    h1{font-size:20px;letter-spacing:1px;}
+    .big-price{font-size:20px;}
+    .section h2{font-size:15px;}
+    .nav-brand{font-size:14px;}
+    .nav a{font-size:11px;padding:4px 7px;}
+    .gold-brand{grid-template-columns:1fr;}
+    .kline-chart{height:80px;}
+    .flow-chart{height:240px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">看看</span>
+    <a href="#overview" class="active">行情</a>
+    <a href="#flow">资金</a>
+    <a href="#news">消息</a>
+    <a href="#forecast">预测</a>
+    <a href="#summary">评级</a>
+    <a href="#gold">黄金</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">🌙</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<div class="hero fade-in">
+  <h1>看看</h1>
+  <div class="hero-date"><span class="dot"></span> 2026-08-27 盘后情报</div>
+</div>
+
+<div class="summary-box fade-in">
+  <strong>盘后综述</strong>　今日三持仓自动播报：中航重机、金风科技 收涨。资金面与走势详见各板块（数据截至 2026-08-27 收盘，全自动生成）。
+</div>
+
+<!-- ========== 1. 行情总览 ========== -->
+<div class="section fade-in" id="overview">
+  <h2><span class="num">1</span>行情总览</h2>
+  <div class="stock-card">
+    
+    
+    
+    <div class="card">
+      <h3>中航重机 <span class="code">600765.SH</span></h3>
+      <div class="big-price up">
+        13.39 
+        <span class="pct">+0.37%</span>
+      </div>
+      <div class="kline-wrap"><div class="kline-chart">
+        
+        <svg class="svg-chart" viewBox="0 0 240 120" preserveAspectRatio="none">
+<line x1="3.9" y1="74.0" x2="3.9" y2="86.8" stroke="#e74c3c" stroke-width="1"/>
+<rect x="1.7" y="80.4" width="4.5" height="3.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-16 O:13.0 C:13.04 L:12.96 H:13.12</title>
+<line x1="11.6" y1="71.6" x2="11.6" y2="103.6" stroke="#27ae60" stroke-width="1"/>
+<rect x="9.4" y="84.4" width="4.5" height="16.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-17 O:12.99 C:12.79 L:12.75 H:13.15</title>
+<line x1="19.4" y1="75.6" x2="19.4" y2="110.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="17.1" y="88.4" width="4.5" height="6.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-20 O:12.86 C:12.94 L:12.67 H:13.1</title>
+<line x1="27.1" y1="59.6" x2="27.1" y2="91.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="24.9" y="71.6" width="4.5" height="16.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-21 O:12.95 C:13.15 L:12.9 H:13.3</title>
+<line x1="34.9" y1="69.2" x2="34.9" y2="89.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="32.6" y="74.8" width="4.5" height="1.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-22 O:13.11 C:13.1 L:12.93 H:13.18</title>
+<line x1="42.6" y1="52.4" x2="42.6" y2="77.2" stroke="#e74c3c" stroke-width="1"/>
+<rect x="40.4" y="52.4" width="4.5" height="22.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-23 O:13.11 C:13.39 L:13.08 H:13.39</title>
+<line x1="50.3" y1="37.2" x2="50.3" y2="67.6" stroke="#27ae60" stroke-width="1"/>
+<rect x="48.1" y="62.0" width="4.5" height="5.6" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-24 O:13.27 C:13.2 L:13.2 H:13.58</title>
+<line x1="58.1" y1="40.4" x2="58.1" y2="75.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="55.8" y="43.6" width="4.5" height="32.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-27 O:13.1 C:13.5 L:13.1 H:13.54</title>
+<line x1="65.8" y1="47.6" x2="65.8" y2="66.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="63.6" y="51.6" width="4.5" height="6.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-28 O:13.4 C:13.32 L:13.21 H:13.45</title>
+<line x1="73.6" y1="34.8" x2="73.6" y2="59.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="71.3" y="42.0" width="4.5" height="16.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-29 O:13.31 C:13.52 L:13.3 H:13.61</title>
+<line x1="81.3" y1="28.4" x2="81.3" y2="49.2" stroke="#e74c3c" stroke-width="1"/>
+<rect x="79.1" y="32.4" width="4.5" height="15.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-30 O:13.45 C:13.64 L:13.43 H:13.69</title>
+<line x1="89.0" y1="23.6" x2="89.0" y2="39.6" stroke="#27ae60" stroke-width="1"/>
+<rect x="86.8" y="30.0" width="4.5" height="3.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-31 O:13.67 C:13.63 L:13.55 H:13.75</title>
+<line x1="96.8" y1="15.6" x2="96.8" y2="39.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="94.5" y="19.6" width="4.5" height="16.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-03 O:13.59 C:13.8 L:13.55 H:13.85</title>
+<line x1="104.5" y1="16.4" x2="104.5" y2="29.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="102.3" y="19.6" width="4.5" height="5.6" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-04 O:13.8 C:13.73 L:13.68 H:13.84</title>
+<line x1="112.3" y1="23.6" x2="112.3" y2="42.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="110.0" y="26.0" width="4.5" height="13.6" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-05 O:13.72 C:13.55 L:13.51 H:13.75</title>
+<line x1="120.0" y1="36.4" x2="120.0" y2="57.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="117.8" y="40.4" width="4.5" height="5.6" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-06 O:13.54 C:13.47 L:13.33 H:13.59</title>
+<line x1="127.7" y1="46.0" x2="127.7" y2="61.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="125.5" y="46.0" width="4.5" height="2.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-07 O:13.47 C:13.44 L:13.28 H:13.47</title>
+<line x1="135.5" y1="10.0" x2="135.5" y2="51.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="133.2" y="11.6" width="4.5" height="36.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-10 O:13.44 C:13.9 L:13.4 H:13.92</title>
+<line x1="143.2" y1="26.0" x2="143.2" y2="42.0" stroke="#27ae60" stroke-width="1"/>
+<rect x="141.0" y="30.8" width="4.5" height="6.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-11 O:13.66 C:13.58 L:13.52 H:13.72</title>
+<line x1="151.0" y1="35.6" x2="151.0" y2="44.4" stroke="#27ae60" stroke-width="1"/>
+<rect x="148.7" y="37.2" width="4.5" height="4.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-12 O:13.58 C:13.53 L:13.49 H:13.6</title>
+<line x1="158.7" y1="35.6" x2="158.7" y2="52.4" stroke="#27ae60" stroke-width="1"/>
+<rect x="156.5" y="36.4" width="4.5" height="14.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-13 O:13.59 C:13.41 L:13.39 H:13.6</title>
+<line x1="166.4" y1="26.0" x2="166.4" y2="54.8" stroke="#e74c3c" stroke-width="1"/>
+<rect x="164.2" y="46.0" width="4.5" height="4.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-14 O:13.41 C:13.47 L:13.36 H:13.72</title>
+<line x1="174.2" y1="38.0" x2="174.2" y2="51.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="171.9" y="38.8" width="4.5" height="6.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-17 O:13.48 C:13.56 L:13.4 H:13.57</title>
+<line x1="181.9" y1="37.2" x2="181.9" y2="63.6" stroke="#27ae60" stroke-width="1"/>
+<rect x="179.7" y="44.4" width="4.5" height="7.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-18 O:13.49 C:13.4 L:13.25 H:13.58</title>
+<line x1="189.7" y1="42.8" x2="189.7" y2="77.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="187.4" y="46.8" width="4.5" height="30.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-19 O:13.46 C:13.08 L:13.08 H:13.51</title>
+<line x1="197.4" y1="69.2" x2="197.4" y2="80.4" stroke="#e74c3c" stroke-width="1"/>
+<rect x="195.2" y="76.4" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-20 O:13.08 C:13.09 L:13.04 H:13.18</title>
+<line x1="205.1" y1="72.4" x2="205.1" y2="91.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="202.9" y="75.6" width="4.5" height="4.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-21 O:13.04 C:13.1 L:12.9 H:13.14</title>
+<line x1="212.9" y1="63.6" x2="212.9" y2="79.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="210.6" y="70.0" width="4.5" height="4.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-24 O:13.11 C:13.17 L:13.05 H:13.25</title>
+<line x1="220.6" y1="63.6" x2="220.6" y2="77.2" stroke="#e74c3c" stroke-width="1"/>
+<rect x="218.4" y="64.4" width="4.5" height="8.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-25 O:13.14 C:13.24 L:13.08 H:13.25</title>
+<line x1="228.4" y1="50.8" x2="228.4" y2="64.4" stroke="#e74c3c" stroke-width="1"/>
+<rect x="226.1" y="56.4" width="4.5" height="7.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-26 O:13.25 C:13.34 L:13.24 H:13.41</title>
+<line x1="236.1" y1="49.2" x2="236.1" y2="61.2" stroke="#e74c3c" stroke-width="1"/>
+<rect x="233.9" y="52.4" width="4.5" height="4.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-27 O:13.33 C:13.39 L:13.28 H:13.43</title>
+</svg>
+        
+      </div></div>
+      <div class="mini-grid">
+        <div><span class="label">今开</span><span class="val">13.33</span></div>
+        <div><span class="label">最高</span><span class="val">13.43</span></div>
+        <div><span class="label">最低</span><span class="val">13.28</span></div>
+        <div><span class="label">昨收</span><span class="val">13.34</span></div>
+        <div><span class="label">成交量</span><span class="val">5.95万</span></div>
+        <div><span class="label">成交额</span><span class="val">7943</span></div>
+        <div><span class="label">换手率</span><span class="val">0.38%</span></div>
+        <div><span class="label">量比</span><span class="val">1.41</span></div>
+        <div><span class="label">PE(TTM)</span><span class="val">36.53</span></div>
+        <div><span class="label">PB</span><span class="val">1.45</span></div>
+        <div><span class="label">总市值</span><span class="val">207</span></div>
+        <div><span class="label">流通市值</span><span class="val">207</span></div>
+      </div>
+    </div>
+    
+    
+    <div class="card">
+      <h3>中航高科 <span class="code">600862.SH</span></h3>
+      <div class="big-price down">
+        17.51 
+        <span class="pct">-0.11%</span>
+      </div>
+      <div class="kline-wrap"><div class="kline-chart">
+        
+        <svg class="svg-chart" viewBox="0 0 240 120" preserveAspectRatio="none">
+<line x1="3.9" y1="10.0" x2="3.9" y2="26.4" stroke="#27ae60" stroke-width="1"/>
+<rect x="1.7" y="23.1" width="4.5" height="1.9" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-16 O:19.52 C:19.47 L:19.43 H:19.87</title>
+<line x1="11.6" y1="23.8" x2="11.6" y2="60.0" stroke="#27ae60" stroke-width="1"/>
+<rect x="9.4" y="29.4" width="4.5" height="29.5" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-17 O:19.35 C:18.56 L:18.53 H:19.5</title>
+<line x1="19.4" y1="48.4" x2="19.4" y2="83.5" stroke="#27ae60" stroke-width="1"/>
+<rect x="17.1" y="57.4" width="4.5" height="7.8" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-20 O:18.6 C:18.39 L:17.9 H:18.84</title>
+<line x1="27.1" y1="42.8" x2="27.1" y2="67.1" stroke="#e74c3c" stroke-width="1"/>
+<rect x="24.9" y="51.4" width="4.5" height="15.7" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-21 O:18.34 C:18.76 L:18.34 H:18.99</title>
+<line x1="34.9" y1="54.0" x2="34.9" y2="73.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="32.6" y="54.8" width="4.5" height="17.9" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-22 O:18.67 C:18.19 L:18.16 H:18.69</title>
+<line x1="42.6" y1="61.9" x2="42.6" y2="77.9" stroke="#e74c3c" stroke-width="1"/>
+<rect x="40.4" y="63.0" width="4.5" height="11.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-23 O:18.15 C:18.45 L:18.05 H:18.48</title>
+<line x1="50.3" y1="58.9" x2="50.3" y2="88.7" stroke="#27ae60" stroke-width="1"/>
+<rect x="48.1" y="68.6" width="4.5" height="17.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-24 O:18.3 C:17.84 L:17.76 H:18.56</title>
+<line x1="58.1" y1="74.2" x2="58.1" y2="93.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="55.8" y="74.9" width="4.5" height="17.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-27 O:17.67 C:18.13 L:17.63 H:18.15</title>
+<line x1="65.8" y1="78.7" x2="65.8" y2="89.1" stroke="#27ae60" stroke-width="1"/>
+<rect x="63.6" y="78.7" width="4.5" height="3.4" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-28 O:18.03 C:17.94 L:17.75 H:18.03</title>
+<line x1="73.6" y1="54.8" x2="73.6" y2="82.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="71.3" y="57.4" width="4.5" height="23.9" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-29 O:17.96 C:18.6 L:17.94 H:18.67</title>
+<line x1="81.3" y1="39.5" x2="81.3" y2="61.5" stroke="#e74c3c" stroke-width="1"/>
+<rect x="79.1" y="46.2" width="4.5" height="14.6" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-30 O:18.51 C:18.9 L:18.49 H:19.08</title>
+<line x1="89.0" y1="42.5" x2="89.0" y2="54.4" stroke="#27ae60" stroke-width="1"/>
+<rect x="86.8" y="48.1" width="4.5" height="4.5" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-31 O:18.85 C:18.73 L:18.68 H:19.0</title>
+<line x1="96.8" y1="38.0" x2="96.8" y2="58.5" stroke="#e74c3c" stroke-width="1"/>
+<rect x="94.5" y="47.3" width="4.5" height="4.9" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-03 O:18.74 C:18.87 L:18.57 H:19.12</title>
+<line x1="104.5" y1="44.3" x2="104.5" y2="57.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="102.3" y="47.3" width="4.5" height="9.7" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-04 O:18.87 C:18.61 L:18.59 H:18.95</title>
+<line x1="112.3" y1="55.9" x2="112.3" y2="66.0" stroke="#27ae60" stroke-width="1"/>
+<rect x="110.0" y="58.1" width="4.5" height="3.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-05 O:18.58 C:18.5 L:18.37 H:18.64</title>
+<line x1="120.0" y1="61.1" x2="120.0" y2="75.7" stroke="#27ae60" stroke-width="1"/>
+<rect x="117.8" y="61.9" width="4.5" height="7.8" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-06 O:18.48 C:18.27 L:18.11 H:18.5</title>
+<line x1="127.7" y1="69.0" x2="127.7" y2="81.3" stroke="#27ae60" stroke-width="1"/>
+<rect x="125.5" y="69.7" width="4.5" height="2.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-07 O:18.27 C:18.21 L:17.96 H:18.29</title>
+<line x1="135.5" y1="55.1" x2="135.5" y2="74.2" stroke="#e74c3c" stroke-width="1"/>
+<rect x="133.2" y="55.9" width="4.5" height="13.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-10 O:18.28 C:18.64 L:18.15 H:18.66</title>
+<line x1="143.2" y1="60.0" x2="143.2" y2="75.3" stroke="#27ae60" stroke-width="1"/>
+<rect x="141.0" y="63.0" width="4.5" height="11.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-11 O:18.45 C:18.15 L:18.12 H:18.53</title>
+<line x1="151.0" y1="71.2" x2="151.0" y2="76.8" stroke="#e74c3c" stroke-width="1"/>
+<rect x="148.7" y="72.3" width="4.5" height="2.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-12 O:18.14 C:18.2 L:18.08 H:18.23</title>
+<line x1="158.7" y1="69.0" x2="158.7" y2="78.7" stroke="#27ae60" stroke-width="1"/>
+<rect x="156.5" y="71.6" width="4.5" height="6.7" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-13 O:18.22 C:18.04 L:18.03 H:18.29</title>
+<line x1="166.4" y1="70.4" x2="166.4" y2="79.8" stroke="#e74c3c" stroke-width="1"/>
+<rect x="164.2" y="77.2" width="4.5" height="2.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-14 O:18.01 C:18.07 L:18.0 H:18.25</title>
+<line x1="174.2" y1="71.9" x2="174.2" y2="86.9" stroke="#27ae60" stroke-width="1"/>
+<rect x="171.9" y="76.8" width="4.5" height="1.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-17 O:18.08 C:18.07 L:17.81 H:18.21</title>
+<line x1="181.9" y1="77.9" x2="181.9" y2="88.4" stroke="#27ae60" stroke-width="1"/>
+<rect x="179.7" y="78.3" width="4.5" height="7.8" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-18 O:18.04 C:17.83 L:17.77 H:18.05</title>
+<line x1="189.7" y1="80.9" x2="189.7" y2="105.9" stroke="#27ae60" stroke-width="1"/>
+<rect x="187.4" y="80.9" width="4.5" height="22.8" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-19 O:17.97 C:17.36 L:17.3 H:17.97</title>
+<line x1="197.4" y1="99.6" x2="197.4" y2="105.9" stroke="#e74c3c" stroke-width="1"/>
+<rect x="195.2" y="103.3" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-20 O:17.36 C:17.37 L:17.3 H:17.47</title>
+<line x1="205.1" y1="99.6" x2="205.1" y2="110.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="202.9" y="102.9" width="4.5" height="1.5" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-21 O:17.34 C:17.38 L:17.19 H:17.47</title>
+<line x1="212.9" y1="89.9" x2="212.9" y2="102.5" stroke="#e74c3c" stroke-width="1"/>
+<rect x="210.6" y="98.1" width="4.5" height="2.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-24 O:17.45 C:17.51 L:17.39 H:17.73</title>
+<line x1="220.6" y1="97.3" x2="220.6" y2="104.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="218.4" y="97.7" width="4.5" height="3.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-25 O:17.52 C:17.44 L:17.33 H:17.53</title>
+<line x1="228.4" y1="93.6" x2="228.4" y2="102.9" stroke="#e74c3c" stroke-width="1"/>
+<rect x="226.1" y="97.3" width="4.5" height="3.7" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-26 O:17.43 C:17.53 L:17.38 H:17.63</title>
+<line x1="236.1" y1="96.9" x2="236.1" y2="103.3" stroke="#27ae60" stroke-width="1"/>
+<rect x="233.9" y="96.9" width="4.5" height="1.1" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-27 O:17.54 C:17.51 L:17.37 H:17.54</title>
+</svg>
+        
+      </div></div>
+      <div class="mini-grid">
+        <div><span class="label">今开</span><span class="val">17.54</span></div>
+        <div><span class="label">最高</span><span class="val">17.54</span></div>
+        <div><span class="label">最低</span><span class="val">17.37</span></div>
+        <div><span class="label">昨收</span><span class="val">17.53</span></div>
+        <div><span class="label">成交量</span><span class="val">3.66万</span></div>
+        <div><span class="label">成交额</span><span class="val">6387</span></div>
+        <div><span class="label">换手率</span><span class="val">0.26%</span></div>
+        <div><span class="label">量比</span><span class="val">1.00</span></div>
+        <div><span class="label">PE(TTM)</span><span class="val">26.40</span></div>
+        <div><span class="label">PB</span><span class="val">3.20</span></div>
+        <div><span class="label">总市值</span><span class="val">243</span></div>
+        <div><span class="label">流通市值</span><span class="val">243</span></div>
+      </div>
+    </div>
+    
+    
+    <div class="card">
+      <h3>金风科技 <span class="code">002202.SZ</span></h3>
+      <div class="big-price up">
+        18.73 
+        <span class="pct">+0.64%</span>
+      </div>
+      <div class="kline-wrap"><div class="kline-chart">
+        
+        <svg class="svg-chart" viewBox="0 0 240 120" preserveAspectRatio="none">
+<line x1="3.9" y1="78.5" x2="3.9" y2="93.1" stroke="#e74c3c" stroke-width="1"/>
+<rect x="1.7" y="84.6" width="4.5" height="1.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-16 O:18.281 C:18.391 L:17.731 H:18.871</title>
+<line x1="11.6" y1="84.6" x2="11.6" y2="105.0" stroke="#27ae60" stroke-width="1"/>
+<rect x="9.4" y="85.9" width="4.5" height="19.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-17 O:18.291 C:16.811 L:16.801 H:18.391</title>
+<line x1="19.4" y1="98.7" x2="19.4" y2="109.0" stroke="#27ae60" stroke-width="1"/>
+<rect x="17.1" y="99.9" width="4.5" height="4.7" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-20 O:17.201 C:16.831 L:16.491 H:17.291</title>
+<line x1="27.1" y1="97.0" x2="27.1" y2="110.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="24.9" y="97.9" width="4.5" height="5.4" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-21 O:16.931 C:17.351 L:16.411 H:17.421</title>
+<line x1="34.9" y1="91.2" x2="34.9" y2="100.4" stroke="#e74c3c" stroke-width="1"/>
+<rect x="32.6" y="98.5" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-22 O:17.241 C:17.311 L:17.161 H:17.881</title>
+<line x1="42.6" y1="87.3" x2="42.6" y2="100.1" stroke="#e74c3c" stroke-width="1"/>
+<rect x="40.4" y="87.4" width="4.5" height="11.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-23 O:17.311 C:18.171 L:17.181 H:18.181</title>
+<line x1="50.3" y1="89.6" x2="50.3" y2="97.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="48.1" y="91.2" width="4.5" height="5.9" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-24 O:17.881 C:17.421 L:17.411 H:18.001</title>
+<line x1="58.1" y1="89.9" x2="58.1" y2="98.3" stroke="#e74c3c" stroke-width="1"/>
+<rect x="55.8" y="90.3" width="4.5" height="7.1" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-27 O:17.401 C:17.951 L:17.321 H:17.981</title>
+<line x1="65.8" y1="85.4" x2="65.8" y2="93.5" stroke="#27ae60" stroke-width="1"/>
+<rect x="63.6" y="90.3" width="4.5" height="2.1" fill="#27ae60" rx="0.5"/>
+<title> 2026-07-28 O:17.951 C:17.791 L:17.701 H:18.331</title>
+<line x1="73.6" y1="89.6" x2="73.6" y2="98.3" stroke="#e74c3c" stroke-width="1"/>
+<rect x="71.3" y="91.2" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-29 O:17.801 C:17.881 L:17.321 H:18.001</title>
+<line x1="81.3" y1="87.7" x2="81.3" y2="94.4" stroke="#e74c3c" stroke-width="1"/>
+<rect x="79.1" y="92.0" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-30 O:17.801 C:17.811 L:17.631 H:18.151</title>
+<line x1="89.0" y1="83.7" x2="89.0" y2="90.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="86.8" y="87.2" width="4.5" height="2.8" fill="#e74c3c" rx="0.5"/>
+<title> 2026-07-31 O:17.971 C:18.191 L:17.971 H:18.461</title>
+<line x1="96.8" y1="74.4" x2="96.8" y2="86.8" stroke="#e74c3c" stroke-width="1"/>
+<rect x="94.5" y="76.3" width="4.5" height="10.5" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-03 O:18.221 C:19.041 L:18.221 H:19.191</title>
+<line x1="104.5" y1="71.9" x2="104.5" y2="80.1" stroke="#e74c3c" stroke-width="1"/>
+<rect x="102.3" y="73.1" width="4.5" height="1.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-04 O:19.201 C:19.291 L:18.741 H:19.381</title>
+<line x1="112.3" y1="62.0" x2="112.3" y2="72.9" stroke="#e74c3c" stroke-width="1"/>
+<rect x="110.0" y="64.5" width="4.5" height="8.5" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-05 O:19.301 C:19.961 L:19.301 H:20.151</title>
+<line x1="120.0" y1="46.3" x2="120.0" y2="65.4" stroke="#e74c3c" stroke-width="1"/>
+<rect x="117.8" y="56.8" width="4.5" height="8.5" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-06 O:19.901 C:20.561 L:19.891 H:21.381</title>
+<line x1="127.7" y1="39.9" x2="127.7" y2="58.5" stroke="#e74c3c" stroke-width="1"/>
+<rect x="125.5" y="40.9" width="4.5" height="17.6" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-07 O:20.43 C:21.8 L:20.43 H:21.88</title>
+<line x1="135.5" y1="39.6" x2="135.5" y2="52.7" stroke="#27ae60" stroke-width="1"/>
+<rect x="133.2" y="39.6" width="4.5" height="2.8" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-10 O:21.9 C:21.68 L:20.88 H:21.9</title>
+<line x1="143.2" y1="59.6" x2="143.2" y2="67.1" stroke="#27ae60" stroke-width="1"/>
+<rect x="141.0" y="63.9" width="4.5" height="1.2" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-11 O:20.01 C:19.92 L:19.76 H:20.34</title>
+<line x1="151.0" y1="51.8" x2="151.0" y2="69.5" stroke="#e74c3c" stroke-width="1"/>
+<rect x="148.7" y="58.3" width="4.5" height="7.1" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-12 O:19.89 C:20.44 L:19.57 H:20.95</title>
+<line x1="158.7" y1="45.9" x2="158.7" y2="56.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="156.5" y="52.1" width="4.5" height="2.1" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-13 O:20.77 C:20.93 L:20.62 H:21.41</title>
+<line x1="166.4" y1="49.2" x2="166.4" y2="57.8" stroke="#27ae60" stroke-width="1"/>
+<rect x="164.2" y="51.9" width="4.5" height="1.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-14 O:20.94 C:20.93 L:20.48 H:21.15</title>
+<line x1="174.2" y1="41.4" x2="174.2" y2="51.0" stroke="#e74c3c" stroke-width="1"/>
+<rect x="171.9" y="41.4" width="4.5" height="4.6" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-17 O:21.4 C:21.76 L:21.01 H:21.76</title>
+<line x1="181.9" y1="36.0" x2="181.9" y2="47.3" stroke="#e74c3c" stroke-width="1"/>
+<rect x="179.7" y="38.2" width="4.5" height="3.3" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-18 O:21.75 C:22.01 L:21.3 H:22.18</title>
+<line x1="189.7" y1="10.0" x2="189.7" y2="38.3" stroke="#27ae60" stroke-width="1"/>
+<rect x="187.4" y="10.0" width="4.5" height="28.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-19 O:24.21 C:22.03 L:22.0 H:24.21</title>
+<line x1="197.4" y1="44.4" x2="197.4" y2="66.2" stroke="#27ae60" stroke-width="1"/>
+<rect x="195.2" y="44.7" width="4.5" height="21.3" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-20 O:21.5 C:19.84 L:19.83 H:21.53</title>
+<line x1="205.1" y1="70.4" x2="205.1" y2="78.1" stroke="#27ae60" stroke-width="1"/>
+<rect x="202.9" y="73.7" width="4.5" height="1.0" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-21 O:19.24 C:19.19 L:18.9 H:19.5</title>
+<line x1="212.9" y1="75.5" x2="212.9" y2="89.6" stroke="#27ae60" stroke-width="1"/>
+<rect x="210.6" y="78.1" width="4.5" height="7.7" fill="#27ae60" rx="0.5"/>
+<title> 2026-08-24 O:18.9 C:18.3 L:18.0 H:19.1</title>
+<line x1="220.6" y1="81.7" x2="220.6" y2="88.6" stroke="#e74c3c" stroke-width="1"/>
+<rect x="218.4" y="83.7" width="4.5" height="4.2" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-25 O:18.13 C:18.46 L:18.08 H:18.62</title>
+<line x1="228.4" y1="76.5" x2="228.4" y2="81.9" stroke="#e74c3c" stroke-width="1"/>
+<rect x="226.1" y="81.8" width="4.5" height="1.0" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-26 O:18.6 C:18.61 L:18.6 H:19.02</title>
+<line x1="236.1" y1="79.9" x2="236.1" y2="85.1" stroke="#e74c3c" stroke-width="1"/>
+<rect x="233.9" y="80.3" width="4.5" height="3.6" fill="#e74c3c" rx="0.5"/>
+<title> 2026-08-27 O:18.45 C:18.73 L:18.35 H:18.76</title>
+</svg>
+        
+      </div></div>
+      <div class="mini-grid">
+        <div><span class="label">今开</span><span class="val">18.45</span></div>
+        <div><span class="label">最高</span><span class="val">18.76</span></div>
+        <div><span class="label">最低</span><span class="val">18.35</span></div>
+        <div><span class="label">昨收</span><span class="val">18.61</span></div>
+        <div><span class="label">成交量</span><span class="val">50.28万</span></div>
+        <div><span class="label">成交额</span><span class="val">9.34万</span></div>
+        <div><span class="label">换手率</span><span class="val">1.49%</span></div>
+        <div><span class="label">量比</span><span class="val">0.67</span></div>
+        <div><span class="label">PE(TTM)</span><span class="val">25.18</span></div>
+        <div><span class="label">PB</span><span class="val">2.01</span></div>
+        <div><span class="label">总市值</span><span class="val">629</span></div>
+        <div><span class="label">流通市值</span><span class="val">791</span></div>
+      </div>
+    </div>
+    
+  </div>
+  <p class="note">数据来源：腾讯财经/akshare行情接口，行情截至 2026-08-27 收盘。A股红涨绿跌。</p>
+</div>
+
+<!-- ========== 2. 资金流向对比 ========== -->
+<div class="section fade-in" id="flow">
+  <h2><span class="num">2</span>资金流向对比</h2>
+  <div class="flow-chart" id="flowChart"></div>
+  <p class="note">单位：万元。红柱=主力净流入，绿柱=主力净流出。数据来源：腾讯自选股/akshare 资金流。</p>
+</div>
+
+<!-- ========== 3. 本周消息面 ========== -->
+<div class="section fade-in" id="news">
+  <h2><span class="num">3</span>本周消息面</h2>
+  <ul class="msg-list">
+    
+    <li><span class="date">2026-08-27</span><span class="content">资金流向数据暂以占位显示（腾讯接口不支持资金流）。行情、K线、技术指标均为实时真实数据。<span class="tag-pill warn">提示</span></span></li>
+    
+  </ul>
+  <p class="note">消息来源：公司公告、上交所/深交所披露、新浪财经、证券时报、同花顺、东方财富。</p>
+</div>
+
+<!-- ========== 4. 未来2日走势预测 ========== -->
+<div class="section fade-in" id="forecast">
+  <h2><span class="num">4</span>未来2日走势预测</h2>
+  
+  
+  <div class="forecast-card">
+    <h4>中航重机 <span class="stock-code">600765</span></h4>
+    <ul>
+      
+      <li><strong>技术面：</strong>股价 13.39，MA5 13.25/MA10 13.28/MA20 13.44（空头）；MACD绿柱 -0.038，KDJ 纠缠（J=74.0）。</li>
+      
+      <li><strong>支撑/阻力：</strong>下方支撑 12.90（近20日低）→ 上方阻力 13.92（近20日高）。</li>
+      
+      <li><strong>资金面：</strong>当日主力 净流入 0.00万（+0.00万），近20日累计 +0.00万。</li>
+      
+      <li><strong>预判：</strong>弱势整理格局，均线空头压制，反弹缺增量，失守支撑则重回弱势。</li>
+      
+      <li><strong>观察点：</strong>关注 MACD 柱方向、KDJ 是否金叉确认、量能是否放大配合突破。</li>
+      
+    </ul>
+  </div>
+  
+  <div class="forecast-card">
+    <h4>中航高科 <span class="stock-code">600862</span></h4>
+    <ul>
+      
+      <li><strong>技术面：</strong>股价 17.51，MA5 17.47/MA10 17.61/MA20 18.01（空头）；MACD绿柱 -0.102，KDJ 纠缠（J=35.1）。</li>
+      
+      <li><strong>支撑/阻力：</strong>下方支撑 17.19（近20日低）→ 上方阻力 19.12（近20日高）。</li>
+      
+      <li><strong>资金面：</strong>当日主力 净流入 0.00万（+0.00万），近20日累计 +0.00万。</li>
+      
+      <li><strong>预判：</strong>弱势整理格局，均线空头压制，反弹缺增量，失守支撑则重回弱势。</li>
+      
+      <li><strong>观察点：</strong>关注 MACD 柱方向、KDJ 是否金叉确认、量能是否放大配合突破。</li>
+      
+    </ul>
+  </div>
+  
+  <div class="forecast-card">
+    <h4>金风科技 <span class="stock-code">002202</span></h4>
+    <ul>
+      
+      <li><strong>技术面：</strong>股价 18.73，MA5 18.66/MA10 19.99/MA20 20.08（空头）；MACD绿柱 -0.484，KDJ 纠缠（J=-6.4）。</li>
+      
+      <li><strong>支撑/阻力：</strong>下方支撑 17.97（近20日低）→ 上方阻力 24.21（近20日高）。</li>
+      
+      <li><strong>资金面：</strong>当日主力 净流入 0.00万（+0.00万），近20日累计 +0.00万。</li>
+      
+      <li><strong>预判：</strong>弱势整理格局，均线空头压制，反弹缺增量，失守支撑则重回弱势。</li>
+      
+      <li><strong>观察点：</strong>关注 MACD 柱方向、KDJ 是否金叉确认、量能是否放大配合突破。</li>
+      
+    </ul>
+  </div>
+  
+</div>
+
+<!-- ========== 5. 综合注意事项 ========== -->
+<div class="section fade-in" id="summary">
+  <h2><span class="num">5</span>综合注意事项</h2>
+  <div class="table-wrap"><table class="compare-table">
+    <tbody><tr><th>标的</th><th>核心看点</th><th>核心风险点</th><th>资金面评级</th><th>技术面评级</th></tr>
+    
+    
+    
+    <tr>
+      <td class="bold">中航重机<br>600765</td>
+      <td>收盘价 13.39，MA20 13.44；详见技术面与资金面。</td>
+      <td>MACD绿柱（-0.038），均线空头压制；近20日主力 +0.00万（流入）。</td>
+      <td><span class="down">偏弱</span>（主力 0/4 周期为正（20日 +0.00万））</td>
+      <td><span class="down">偏空</span>（MACD绿柱，均线空头，KDJ J=74）</td>
+    </tr>
+    
+    
+    <tr>
+      <td class="bold">中航高科<br>600862</td>
+      <td>收盘价 17.51，MA20 18.01；详见技术面与资金面。</td>
+      <td>MACD绿柱（-0.102），均线空头压制；近20日主力 +0.00万（流入）。</td>
+      <td><span class="down">偏弱</span>（主力 0/4 周期为正（20日 +0.00万））</td>
+      <td><span class="down">偏空</span>（MACD绿柱，均线空头，KDJ J=35）</td>
+    </tr>
+    
+    
+    <tr>
+      <td class="bold">金风科技<br>002202</td>
+      <td>收盘价 18.73，MA20 20.08；详见技术面与资金面。</td>
+      <td>MACD绿柱（-0.484），均线空头压制；近20日主力 +0.00万（流入）。</td>
+      <td><span class="down">偏弱</span>（主力 0/4 周期为正（20日 +0.00万））</td>
+      <td><span class="down">偏空</span>（MACD绿柱，均线空头，KDJ J=-6）</td>
+    </tr>
+    
+  </tbody></table></div>
+  <p class="note">评级说明：资金面/技术面综合当日+近20日数据。数据来源：腾讯自选股/akshare，截至 2026-08-27 收盘。</p>
+</div>
+
+<!-- ========== 6. 黄金行情 ========== -->
+<div class="section fade-in" id="gold">
+  <h2><span class="num">6</span>黄金行情</h2>
+  <div class="gold-bar">
+    <div class="gold-card">
+      <h4>纽约 COMEX 黄金期货（GC）</h4>
+      
+      <div class="gold-row"><span class="label">最新价</span><span class="val up">4669.88 美元/盎司</span></div>
+      <div class="gold-row"><span class="label">涨跌</span><span class="val up">0.36 / +0.36%</span></div>
+      <div class="gold-row"><span class="label">日内高点</span><span class="val">None</span></div>
+      <div class="gold-row"><span class="label">现货 XAU</span><span class="val ">-- 美元（--）</span></div>
+      <div class="gold-row"><span class="label">时间</span><span class="val">12:58:04</span></div>
+    </div>
+    <div class="gold-card">
+      <h4>上海 沪金主力（AU）</h4>
+      
+      <div class="gold-row"><span class="label">收盘价</span><span class="val up">1073.50 元/克</span></div>
+      <div class="gold-row"><span class="label">较前结算</span><span class="val up">3.86 / +0.36%</span></div>
+      <div class="gold-row"><span class="label">Au99.99 现货</span><span class="val ">-- 元/克（--）</span></div>
+      <div class="gold-row"><span class="label">Au99.99 高低</span><span class="val">None / None</span></div>
+      <div class="gold-row"><span class="label">时间</span><span class="val">12:58:04</span></div>
+    </div>
+  </div>
+
+  <h3>品牌金饰参考价（08/27）</h3>
+  <div class="gold-brand">
+    
+    <div class="brand-item"><div class="name">周大福</div><div class="price up">1476 元/克</div></div>
+    
+    <div class="brand-item"><div class="name">六福珠宝</div><div class="price up">1476 元/克</div></div>
+    
+    <div class="brand-item"><div class="name">周生生</div><div class="price up">1474 元/克</div></div>
+    
+    <div class="brand-item"><div class="name">老庙黄金</div><div class="price up">1473 元/克</div></div>
+    
+    <div class="brand-item"><div class="name">老凤祥</div><div class="price up">1472 元/克</div></div>
+    
+    <div class="brand-item"><div class="name">菜百黄金</div><div class="price up">1454 元/克</div></div>
+    
+  </div>
+
+  <h3>金价核心驱动分析</h3>
+  <ul class="msg-list">
+    
+    <li><span class="tag-pill info">行情</span> <strong>COMEX 黄金上涨 +0.36%</strong>：纽约黄金主力最新报 4669.88 美元/盎司，日内走强。</li>
+    
+    <li><span class="tag-pill warn">提示</span> <strong>自动化提示</strong>：以上驱动由当日真实金价涨跌自动生成；深度宏观/地缘解读建议手动补充。</li>
+    
+  </ul>
+
+  <h3>金价风险提示</h3>
+  <div class="table-wrap"><table>
+    <tr><th>风险类型</th><th>描述</th><th>概率</th><th>影响</th></tr>
+    
+    <tr><td>波动风险</td><td>金价短期波动剧烈，衍生品杠杆风险高</td><td>中</td><td>短期 -3%~-8%</td></tr>
+    
+    <tr><td>美元/利率</td><td>美元反弹或实际利率上行压制金价</td><td>中</td><td>中期 -5%~-10%</td></tr>
+    
+  </table></div>
+  <p class="note">数据来源：上海黄金交易所、同花顺期货、金价查询网、世界黄金协会、证券时报。COMEX 为延时行情。</p>
+</div>
+
+<!-- ========== 免责声明 ========== -->
+<div class="disclaimer fade-in">
+  <strong>免责声明</strong>
+  以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+<div class="visits fade-in">
+  📊 本页浏览量：<span id="visits" style="font-weight:700;color:var(--text2);">--</span> 次
+</div>
+
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
+
+<script>
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('theme',n);var b=document.querySelector('.theme-toggle');if(b)b.textContent=n==='dark'?'☀️':'🌙';}
+(function(){var s=localStorage.getItem('theme');if(s){document.documentElement.setAttribute('data-theme',s);var b=document.querySelector('.theme-toggle');if(b)b.textContent=s==='dark'?'☀️':'🌙';}})();
+var backTop=document.querySelector('.back-top');
+window.addEventListener('scroll',function(){if(window.scrollY>400){backTop.classList.add('show');}else{backTop.classList.remove('show');}});
+var fadeEls=document.querySelectorAll('.fade-in');
+var fadeObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});},{rootMargin:'0px 0px -40px 0px'});
+fadeEls.forEach(function(el){fadeObs.observe(el);});
+var navLinks=document.querySelectorAll('.nav a');
+var sections=document.querySelectorAll('.section[id]');
+var navObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute('id');navLinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});}});},{rootMargin:'-80px 0px -60% 0px'});
+sections.forEach(function(s){navObs.observe(s);});
+</script>
+
+<script>
+fetch('https://api.countapi.xyz/hit/three-stocks-brief-2026')
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var el = document.getElementById('visits');
+    if (el) el.textContent = d.value;
+  })
+  .catch(function() {
+    var el = document.getElementById('visits');
+    if (el) el.textContent = '统计中';
+  });
+</script>
+
+<script>
+// 资金流向柱状图（单位：万元）
+var flowData = {
+  days: ['当日', '近5日', '近10日', '近20日'],
+  zj: [0, 0, 0, 0],
+  gk: [0, 0, 0, 0],
+  jf: [0, 0, 0, 0]
+};
+
+var chart = echarts.init(document.getElementById('flowChart'));
+chart.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: function(v){ return v >= 10000 ? (v/10000).toFixed(2)+'亿' : v+'万'; } },
+  legend: { data: ['中航重机', '中航高科', '金风科技'], top: 4 },
+  grid: { left: '3%', right: '4%', bottom: '3%', top: '14%', containLabel: true },
+  xAxis: { type: 'category', data: flowData.days },
+  yAxis: { type: 'value', name: '万元', axisLabel: { formatter: function(v) { return v >= 10000 ? (v/10000).toFixed(1)+'亿' : v; } } },
+  series: [
+    { name: '中航重机', type: 'bar', data: flowData.zj.map(function(v) { return { value: v, itemStyle: { color: v >= 0 ? '#e74c3c' : '#27ae60' } }; }) },
+    { name: '中航高科', type: 'bar', data: flowData.gk.map(function(v) { return { value: v, itemStyle: { color: v >= 0 ? '#e74c3c' : '#27ae60' } }; }) },
+    { name: '金风科技', type: 'bar', data: flowData.jf.map(function(v) { return { value: v, itemStyle: { color: v >= 0 ? '#e74c3c' : '#27ae60' } }; }) }
+  ]
+});
+window.addEventListener('resize', function() { chart.resize(); });
+</script>
+
+<script>
+// ===== JSONP utility =====
+function _jsonp(url, cbParam){
+  return new Promise((resolve, reject) => {
+    var cbName = 'cb_' + Math.random().toString(36).slice(2,9);
+    var sep = url.indexOf('?') >= 0 ? '&' : '?';
+    var script = document.createElement('script');
+    var settled = false;
+    var timer = setTimeout(function(){
+      if(!settled){ settled = true; cleanup(); reject(new Error('timeout')); }
+    }, 12000);
+    window[cbName] = function(data){
+      if(!settled){ settled = true; cleanup(); resolve(data); }
+    };
+    function cleanup(){
+      clearTimeout(timer);
+      try{ delete window[cbName]; }catch(e){ window[cbName] = undefined; }
+      if(script.parentNode) script.parentNode.removeChild(script);
+    }
+    script.onerror = function(){
+      if(!settled){ settled = true; cleanup(); reject(new Error('network error')); }
+    };
+    script.src = url + sep + encodeURIComponent(cbParam) + '=' + cbName;
+    document.body.appendChild(script);
+  });
+}
+async function _emJson(url){
+  for(var param of ['cb','callback']){
+    try{ return await _jsonp(url, param); }catch(e){}
+  }
+  throw new Error('request failed');
+}
+
+// ===== Fund flow =====
+var FF_STOCKS = [
+  {key:'zj', secid:'1.600765'},
+  {key:'gk', secid:'1.600862'},
+  {key:'jf', secid:'0.002202'},
+];
+
+async function _fetchFundFlow(secid){
+  var url = 'https://push2.eastmoney.com/api/qt/stock/fflow/daykline/get' +
+    '?secid=' + secid + '&fields1=f1,f2,f3,f7' +
+    '&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61,f62,f63&lmt=20&klt=1';
+  var data = await _emJson(url);
+  var klines = (data.data && data.data.klines) || [];
+  if(!klines.length) return null;
+  var flows = klines.map(function(k){
+    return parseFloat(k.split(',')[1]) || 0;
+  });
+  return {
+    day: flows[flows.length-1] / 1e4,
+    '5day': flows.slice(-5).reduce(function(a,b){return a+b;},0) / 1e4,
+    '10day': flows.slice(-10).reduce(function(a,b){return a+b;},0) / 1e4,
+    '20day': flows.reduce(function(a,b){return a+b;},0) / 1e4
+  };
+}
+
+function _updateChart(ff){
+  flowData.zj = [ff.zj.day, ff.zj['5day'], ff.zj['10day'], ff.zj['20day']];
+  flowData.gk = [ff.gk.day, ff.gk['5day'], ff.gk['10day'], ff.gk['20day']];
+  flowData.jf = [ff.jf.day, ff.jf['5day'], ff.jf['10day'], ff.jf['20day']];
+  chart.setOption({series:[
+    {name:'中航重机', data: flowData.zj.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}};})},
+    {name:'中航高科', data: flowData.gk.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}};})},
+    {name:'金风科技', data: flowData.jf.map(function(v){return {value:v, itemStyle:{color:v>=0?'#e74c3c':'#27ae60'}};})}
+  ]});
+}
+
+function _updateForecast(idx, fund){
+  var cards = document.querySelectorAll('.forecast-card');
+  var card = cards[idx];
+  if(!card) return;
+  var lis = card.querySelectorAll('li');
+  for(var i=0; i<lis.length; i++){
+    if(lis[i].textContent.indexOf('资金面') >= 0){
+      var fd = fund.day, f20 = fund['20day'];
+      var dir = fd >= 0 ? '净流入' : '净流出';
+      lis[i].innerHTML = '<strong>资金面：</strong>当日主力 ' + dir + ' ' + Math.abs(fd).toFixed(2) +
+        '万（' + (fd>=0?'+':'') + fd.toFixed(2) + '万），近20日累计 ' +
+        (f20>=0?'+':'') + f20.toFixed(2) + '万。';
+      break;
+    }
+  }
+}
+
+function _updateRating(idx, fund){
+  var rows = document.querySelectorAll('.compare-table tbody tr');
+  var row = rows[idx + 1];
+  if(!row) return;
+  var cells = row.querySelectorAll('td');
+  var periods = [fund.day, fund['5day'], fund['10day'], fund['20day']];
+  var pos = periods.filter(function(v){return v > 0;}).length;
+  var fr, fd_text;
+  if(pos >= 4){ fr='偏多'; fd_text='四周期全流入（20日 '+(fund['20day']>=0?'+':'')+fund['20day'].toFixed(2)+'万）'; }
+  else if(pos >= 2){ fr='中性偏多'; fd_text='主力 '+pos+'/4 周期为正（20日 '+(fund['20day']>=0?'+':'')+fund['20day'].toFixed(2)+'万）'; }
+  else { fr='偏弱'; fd_text='主力 '+pos+'/4 周期为正（20日 '+(fund['20day']>=0?'+':'')+fund['20day'].toFixed(2)+'万）'; }
+  // Risk cell (index 2)
+  if(cells[2]){
+    cells[2].innerHTML = cells[2].innerHTML.replace(
+      /近20日主力 [+-]?[\d.]+万（流入|流出）/,
+      '近20日主力 ' + (fund['20day']>=0?'+':'') + fund['20day'].toFixed(2) + '万（' + (fund['20day']>=0?'流入':'流出') + '）'
+    );
+  }
+  // Fund rating cell (index 3)
+  if(cells[3]){
+    var cls = fr === '偏多' ? 'up' : (fr === '偏弱' ? 'down' : '');
+    cells[3].innerHTML = '<span class="' + cls + '">' + fr + '</span>（' + fd_text + '）';
+  }
+}
+
+// ===== News =====
+async function _fetchNews(){
+  var trace = Math.random().toString(36).slice(2,10);
+  var url = 'https://np-weblist.eastmoney.com/comm/web/getFastNewsList' +
+    '?client=web&biz=web_724&fastColumn=102&sortEnd=0&pageSize=100&req_trace=' + trace;
+  var data = await _emJson(url);
+  return (data.data && data.data.fastNewsList) || data.fastNewsList || [];
+}
+
+function _renderNews(list){
+  var stockKW = ['中航重机','600765','中航高科','600862','金风科技','002202','金风'];
+  var sectorKW = ['航空','军工','风电','新能源','碳纤维','预浸料','风机','低空经济'];
+  var stockNews = list.filter(function(item){
+    var t = (item.title||'') + ' ' + (item.summary||'');
+    return stockKW.some(function(k){ return t.indexOf(k) >= 0; });
+  });
+  var sectorNews = list.filter(function(item){
+    var t = (item.title||'') + ' ' + (item.summary||'');
+    return sectorKW.some(function(k){ return t.indexOf(k) >= 0; });
+  }).filter(function(item){ return stockNews.indexOf(item) < 0; });
+
+  var items = [];
+  function fmt(item, tag){
+    var time = item.showTime || '';
+    var d = time ? time.slice(0,10) : '';
+    var t = time ? time.slice(11,16) : '';
+    return '<li><span class="date">'+d+' '+t+'</span><span class="content"><strong>'+
+      (item.title||'')+'</strong><span class="tag-pill '+tag+'">'+(tag==='warn'?'行业':'个股')+'</span></span></li>';
+  }
+  stockNews.slice(0,5).forEach(function(n){ items.push(fmt(n,'info')); });
+  sectorNews.slice(0,4).forEach(function(n){ items.push(fmt(n,'warn')); });
+  if(items.length === 0){
+    list.slice(0,6).forEach(function(n){
+      var time = n.showTime || '';
+      var d = time ? time.slice(0,10) : '';
+      var t = time ? time.slice(11,16) : '';
+      items.push('<li><span class="date">'+d+' '+t+'</span><span class="content"><strong>'+
+        (n.title||'')+'</strong><span class="tag-pill info">市场</span></span></li>');
+    });
+  }
+  var ul = document.querySelector('.msg-list');
+  if(ul && items.length) ul.innerHTML = items.join('');
+}
+
+// ===== Main =====
+(async function(){
+  // 1. Fund flow
+  try{
+    var results = await Promise.all(FF_STOCKS.map(function(s){
+      return _fetchFundFlow(s.secid).catch(function(){ return null; });
+    }));
+    var ff = {}, hasData = false;
+    FF_STOCKS.forEach(function(s, i){
+      ff[s.key] = results[i] || {day:0,'5day':0,'10day':0,'20day':0};
+      if(results[i]) hasData = true;
+    });
+    if(hasData){
+      _updateChart(ff);
+      FF_STOCKS.forEach(function(s, i){
+        _updateForecast(i, ff[s.key]);
+        _updateRating(i, ff[s.key]);
+      });
+    }
+  }catch(e){ console.log('Fund flow error:', e); }
+
+  // 2. News
+  try{
+    var news = await _fetchNews();
+    if(news && news.length) _renderNews(news);
+  }catch(e){ console.log('News error:', e); }
+})();
+</script>
+
+</body></html>
